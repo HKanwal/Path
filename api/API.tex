@@ -1,0 +1,67 @@
+\documentclass[11pt]{article}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{changepage}
+
+\newcommand{\Tstrut}{\rule{0pt}{3.5ex}}
+\newcommand{\Bstrut}{\rule{0pt}{2.7ex}}
+\newcommand{\col}{RubineRed}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{SFWRENG 2XB3}}\\[8mm]
+  {\huge \textbf{Final Project: Path}}\\[4mm]
+  {\huge \textbf{API Reference}}\\[8mm]
+  {\large \textbf{Group 1}}\\[2mm]
+  {\large \textbf{Harkeerat Kanwal, ...}}\\[2mm]
+  {\large \textbf{400182343, ...}}\\[5mm]
+  {\large \today}
+
+\end{center}
+
+\medskip
+
+\begin{adjustwidth}{-0.75in}{}
+
+\begin{center}
+\begin{tabular}{ r l l }
+
+  \multicolumn{2}{ l }{public class \color{\col} EntryNode} \\[2mm]
+  \hline
+  & EntryNode(String entryLine) & \color{\col} create an entry (linked list node) from line of data \Tstrut \\
+  EntryNode & clone() & \color{\col} clone current EntryNode\Bstrut \\
+  & linkNext(EntryNode node) & \color{\col} change next node pointer\Bstrut \\
+  & append(EntryNode node) & \color{\col} append node to end of this linked list\Bstrut \\
+  EntryNode & getNext() & \color{\col} get next node\Bstrut \\
+  int & getAttr(String attr) & \color{\col} get value of field\Bstrut \\
+  String & toString() & \color{\col} String representation of entry\Bstrut \\
+  int & append(EntryNode node) & \color{\col} append node to end of this linked list\Bstrut \\[8mm]
+
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\begin{center}
+\begin{tabular}{ r l l }
+
+  \multicolumn{2}{ l }{public class \color{\col} Key} \\[2mm]
+  \hline
+  & Key(int yr, int hr, int wthr) & \color{\col} create a key\Tstrut \\
+  String & toString() & \color{\col} String representation of key\Bstrut \\
+  int & compareByYearTo(Key key) & \color{\col} compare to key by year\Bstrut \\
+  int & compareByHourTo(Key key) & \color{\col} compare to key by hour\Bstrut \\
+  int & compareByWeatherTo(Key key) & \color{\col} compare to key by weather\Bstrut \\
+  boolean & isEqual(Key key) & \color{\col} check for equality with key\Bstrut \\
+  int & V\_YEAR() & \color{\col} get vehicle model year\Bstrut \\
+  int & C\_HOUR() & \color{\col} get collision hour\Bstrut \\
+  int & C\_WTHR() & \color{\col} get collision weather\Bstrut \\
+
+\end{tabular}
+\end{center}
+
+\end{adjustwidth}
+
+\end{document}

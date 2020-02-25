@@ -1,0 +1,9 @@
+.classpath
+.project
+.settings
+bin/*
+api/*.aux
+api/*.log
+api/*.synctex.gz
+api/*.fls
+api/*.fdb_latexmk
