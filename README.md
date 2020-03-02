@@ -5,3 +5,5 @@
 4. Finish your sprint and push
 
 All eclipse related files and metadata are ignored by git so that eclipse doesn't get screwy.
+
+Here is a link to the google drive containing all design and Scrum documentation. Please use your mcmaster email to ensure you have edit priveleges: https://drive.google.com/drive/folders/1unErBePXXv15LBFVd0SeF4aXlMKkPk2A?usp=sharing
