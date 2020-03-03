@@ -2,8 +2,8 @@ package safetyrating.data;
 
 
 /**
- * A key of the ordered symbol table. Contains the vehicle model year, hour of collision,
- * and collision weather. Keys are comparable by property and every unique combination of V_HOUR,
+ * A key of the symbol table. Contains the vehicle model year, hour of collision,
+ * and collision weather. Every unique combination of V_HOUR,
  * C_HOUR and C_WTHR produces a unique hash value.
  * 
  * @author Harkeerat Kanwal
@@ -47,8 +47,8 @@ public class Key implements Comparable<Key> {
 	 * meaning every different combination of V_YEAR, C_HOUR and C_WHTR will have a different
 	 * hash value.
 	 * 
-	 * @return An int. The hash value of this key. The first 4 digits represent V_YEAR, the next
-	 *   digits represent C_HOUR, and the last digit represents C_WTHR.
+	 * @return An int. The hash value of this key. The range is from 0 to 19823 which is the total
+	 *   number of possible combinations of V_YEAR, C_HOUR and C_WTHR.
 	 */
 	@Override
 	public int hashCode() {
