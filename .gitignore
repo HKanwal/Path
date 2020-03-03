@@ -9,3 +9,4 @@ api/*.fls
 api/*.fdb_latexmk
 *.csv
 *.docx
+*.docx#
