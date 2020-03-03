@@ -2,12 +2,13 @@ package safetyrating.data;
 
 
 /**
- * A key of the hash table. Stores C_HOUR, C_WTHR, V_YEAR and is can be compared to
- * other keys using any one of these attributes.
+ * A key of the ordered symbol table. Contains the vehicle model year, hour of collision,
+ * and collision weather. Keys are comparable by property and every unique combination of V_HOUR,
+ * C_HOUR and C_WTHR produces a unique hash value.
  * 
  * @author Harkeerat Kanwal
  */
-public class Key {
+public class Key implements Comparable<Key> {
 	private int V_YEAR;
 	private int C_HOUR;
 	private int C_WTHR;
@@ -26,82 +27,68 @@ public class Key {
 	}
 	
 	/**
+	 * Check for equality between keys. Two keys are equal if they have the same V_YEAR,
+	 * C_HOUR and C_WTHR.
+	 * 
+	 * @return A boolean. True if the properties V_YEAR, C_HOUR and C_WTHR of both keys are equal,
+	 *   false otherwise.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Key)) {
+			return false;
+		}
+		Key key = (Key) obj;
+		return getVehicleYear() == key.getVehicleYear() && getHour() == key.getHour() && C_WTHR == key.getWeather();
+	}
+	
+	/**
+	 * Generates a hash value from this key. Every unique key will have a unique hash value,
+	 * meaning every different combination of V_YEAR, C_HOUR and C_WHTR will have a different
+	 * hash value.
+	 * 
+	 * @return An int. The hash value of this key. The first 4 digits represent V_YEAR, the next
+	 *   digits represent C_HOUR, and the last digit represents C_WTHR.
+	 */
+	@Override
+	public int hashCode() {
+		return (V_YEAR-1901)*168 + C_HOUR*7 + C_WTHR - 1;
+	}
+	
+	/**
+	 * Keys are compared based on their hash values.
+	 * 
+	 * @param key The key to compare this object against.
+	 * @return A positive integer if the hash code of the given key is less than this object's
+	 *   hash code, 0 if the hash codes are equal, and a negative integer otherwise.
+	 */
+	public int compareTo(Key key) {
+		if (hashCode() > key.hashCode()) {
+			return 1;
+		}
+		else if (hashCode() == key.hashCode()) {
+			return 0;
+		}
+		else {
+			return -1;
+		}
+	}
+	
+	/**
 	 * Generate a String representation of the key.
+	 * 
 	 * @return String representation of the key.
 	 */
+	@Override
 	public String toString() {
-		return "V_YEAR: " + V_YEAR + ", C_HOUR: " + C_HOUR + ", C_WTHR: " + C_WTHR;
-	}
-	
-	/**
-	 * Compares two keys by their year.
-	 * 
-	 * @param key The key with which to compare vehicle model years.
-	 * @return 0 if they are equal, 1 if this key is greater, -1 if this key is less.
-	 */
-	public int compareByYearTo(Key key) {
-		if (V_YEAR == key.V_YEAR()) {
-			return 0;
-		}
-		else if (V_YEAR > key.V_YEAR()) {
-			return 1;
-		}
-		else {
-			return -1;
-		}
-	}
-	
-	/**
-	 * Compares two keys by their hour.
-	 * 
-	 * @param key The key with which to compare hour of day.
-	 * @return 0 if they are equal, 1 if this key is greater, -1 if this key is less.
-	 */
-	public int compareByHourTo(Key key) {
-		if (C_HOUR == key.C_HOUR()) {
-			return 0;
-		}
-		else if (C_HOUR > key.C_HOUR()) {
-			return 1;
-		}
-		else {
-			return -1;
-		}
-	}
-	
-	/**
-	 * Compares two keys by their weather.
-	 * 
-	 * @param key The key with which to compare weather.
-	 * @return 0 if they are equal, 1 if this key is greater, -1 if this key is less.
-	 */
-	public int compareByWeatherTo(Key key) {
-		if (C_WTHR == key.C_WTHR()) {
-			return 0;
-		}
-		else if (C_WTHR > key.C_WTHR()) {
-			return 1;
-		}
-		else {
-			return -1;
-		}
-	}
-	
-	/**
-	 * Check for equality against another key.
-	 * 
-	 * @param key The key against which to check equality.
-	 * @return A boolean. Weather or not the two keys are equal.
-	 */
-	public boolean isEqual(Key key) {
-		return V_YEAR == key.V_YEAR() && C_HOUR == key.C_HOUR() && C_WTHR == key.C_WTHR();
+		return "V_YEAR: " + getVehicleYear() + ", C_HOUR: " + getHour() + ", C_WTHR: " + getWeather();
 	}
 	
 	/**
 	 * Getter for the vehicle model year.
 	 * @return The V_YEAR.
 	 */
-	public int V_YEAR() {
+	public int getVehicleYear() {
 		return V_YEAR;
 	}
 	
@@ -109,7 +96,7 @@ public class Key {
 	 * Getter for the hour of collision.
 	 * @return The C_HOUR.
 	 */
-	public int C_HOUR() {
+	public int getHour() {
 		return C_HOUR;
 	}
 	
@@ -117,7 +104,7 @@ public class Key {
 	 * Getter for the weather.
 	 * @return The C_WTHR.
 	 */
-	public int C_WTHR() {
+	public int getWeather() {
 		return C_WTHR;
 	}
 }
