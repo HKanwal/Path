@@ -107,4 +107,24 @@ public class Key implements Comparable<Key> {
 	public int getWeather() {
 		return C_WTHR;
 	}
+	
+	/**
+	 * Get an attribute of the key by String.
+	 * 
+	 * @param attr The attribute to fetch.
+	 * @return The value of the attribute. -1 if the attribute is not a part
+	 *   of the information stored in a Key.
+	 */
+	public int getAttr(String attr) {
+		if (attr.equals("V_YEAR")) {
+			return getVehicleYear();
+		}
+		if (attr.equals("C_HOUR")) {
+			return getHour();
+		}
+		if (attr.equals("C_WHTR")) {
+			return getWeather();
+		}
+		return -1;
+	}
 }
