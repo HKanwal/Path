@@ -10,9 +10,8 @@ package safetyrating.data;
  * 
  * @author Harkeerat Kanwal
  */
-public class EntryNode {
-	private String entry;
-	private EntryNode next;
+public class Entry {
+	private String entryLine;
 	
 	/**
 	 * Stores an entry from the data file. Doesn't parse it and only saves the line in String
@@ -20,46 +19,8 @@ public class EntryNode {
 	 * 
 	 * @param entryLine A line of data from the .csv file.
 	 */
-	public EntryNode(String entryLine) {
-		entry = entryLine;
-		next = null;
-	}
-	
-	/**
-	 * Creates a clone of the current node.
-	 * @return A copy of the current node.
-	 */
-	public EntryNode clone() {
-		return new EntryNode(entry);
-	}
-	
-	/**
-	 * Adds or changes the next node in the linked list.
-	 * @param node The next EntryNode in the linked list.
-	 */
-	public void linkNext(EntryNode node) {
-		next = node;
-	}
-	
-	/**
-	 * Append node to end of this linked list using recursion.
-	 * @param node The node to append.
-	 */
-	public void append(EntryNode node) {
-		if (next == null) {
-			linkNext(node);
-		}
-		else {
-			next.append(node);
-		}
-	}
-	
-	/**
-	 * Getter for next node of linked list.
-	 * @return The next node in the linked list.
-	 */
-	public EntryNode getNext() {
-		return next;
+	public Entry(String csvLine) {
+		entryLine = csvLine;
 	}
 	
 	/**
@@ -78,8 +39,8 @@ public class EntryNode {
 		char currentChar;
 		String field = "";
 		// Loop through each character in this entry.
-		for (int i = 0; i < entry.length(); i++) {
-			currentChar = entry.charAt(i);
+		for (int i = 0; i < entryLine.length(); i++) {
+			currentChar = entryLine.charAt(i);
 			// Commas represent end of current column in the .csv file format.
 			if (currentChar == ',') {
 				// Return value of current column because it is the requested field.
@@ -120,7 +81,7 @@ public class EntryNode {
 	 * @return The String representation of this entry. The same as its line in the .csv file.
 	 */
 	public String toString() {
-		return entry;
+		return entryLine;
 	}
 	
 	/**
