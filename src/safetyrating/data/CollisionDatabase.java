@@ -1,27 +1,28 @@
 package safetyrating.data;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import safetyrating.data.EntryNode;
+import safetyrating.data.Entry;
 import safetyrating.data.Key;
 
 
 /**
  * Parses data from the collision data .csv file and provides interface
  * to access and interact with it. The data structure used is a 
- * hash table (symbol table) using seperate chaining.
+ * hash table (symbol table) using separate chaining.
  * 
  * @author Harkeerat Kanwal
  */
 public class CollisionDatabase {
-	/**
-	 * The hash table itself. Uses separate chaining and linked lists for collision
-	 * resolution.
-	 */
-	private Map<Key, EntryNode> hashTable = new HashMap<Key, EntryNode>();
+	private Map<String, Map<Integer, ArrayList<Entry>>> attrHashMaps = new HashMap<>();
+	private String[] attributes = {"C_MNTH", "C_WDAY", "C_HOUR", "C_WTHR", "C_RSUR", "C_RCFG"};
+	private int numEntries;
+	private int totalSize;
 	
 	/**
 	 * The path of the .csv database file.
@@ -29,7 +30,7 @@ public class CollisionDatabase {
 	private String dataFile = "NCDB_1999_to_2017.csv";
 	
 	/**
-	 * Instantiate the database object. Go through .csv file once and fill hash table
+	 * Instantiate the database object. Go through .csv file once and fill hash tables
 	 * with its entries.
 	 * 
 	 * @throws IOException When unable to open or read the .csv file.
@@ -37,14 +38,11 @@ public class CollisionDatabase {
 	public CollisionDatabase() throws IOException {
 		BufferedReader data = new BufferedReader(new FileReader(dataFile));
 		String line;
-		EntryNode currentNode;
-		EntryNode nodeInTable;
-		Key currentKey;
+		Entry currentEntry;
 		int lineCounter = 0;
+		int totalSize = 0;
 		
-		// Statistics.
-		int smallestHashVal = 1000;
-		int largestHashVal = 1000;
+		initHashMaps();
 		
 		// Reads all lines of data-set.
 		while ((line = data.readLine()) != null) {
@@ -54,59 +52,101 @@ public class CollisionDatabase {
 				continue;
 			}
 			
-			// Create node from current data line.
-			currentNode = new EntryNode(line);
+			// Create entry from current data line.
+			currentEntry = new Entry(line);
 			
-			// Ignore entries with unspecified V_YEAR, C_HOUR or C_WTHR.
-			if (currentNode.V_YEAR() == -1 || currentNode.C_HOUR() == -1 || currentNode.C_WTHR() == -1) {
-				continue;
+			// Insert entry into corresponding hash maps.
+			String currentAttr;
+			int attrVal;
+			Map<Integer, ArrayList<Entry>> currentMap;
+			
+			for (int i = 0; i < attributes.length; i++) {
+				currentAttr = attributes[i];
+				attrVal = currentEntry.getAttr(currentAttr);
+				currentMap = attrHashMaps.get(currentAttr);
+				currentMap.putIfAbsent(attrVal, new ArrayList<Entry>());
+				currentMap.get(attrVal).add(currentEntry);
+				System.out.println("Inserted key " + lineCounter + " into hash map for " + currentAttr);
+				totalSize++;
 			}
 			
-			// Create key and add node to linked list in hash table.
-			currentKey = new Key(currentNode.V_YEAR(), currentNode.C_HOUR(), currentNode.C_WTHR());
-			nodeInTable = hashTable.get(currentKey);
-			if (nodeInTable != null) {
-				currentNode.linkNext(nodeInTable);
-			}
-			System.out.println("Inserting key: " + currentKey);
-			hashTable.put(currentKey, currentNode);
 			
 			// Statistics.
 			lineCounter++;
-			if (currentKey.hashCode() < smallestHashVal) {
-				smallestHashVal = currentKey.hashCode();
-			}
-			if (currentKey.hashCode() > largestHashVal) {
-				largestHashVal = currentKey.hashCode();
-			}
 		}
 		System.out.println("Parsing complete.");
-		System.out.println("Number of keys inserted: " + lineCounter);
-		System.out.println("Smallest Hash Value: " + smallestHashVal);
-			System.out.println("Largest Hash Value: " + largestHashVal);	
+		System.out.println("Number of entries: " + lineCounter);
+		System.out.println("Total size of hash maps: " + totalSize);
 		data.close();
-	}
-
-	/**
-	 * Get an entry (linked list node) from the hash table by key.
-	 * 
-	 * @param key The key.
-	 * @return An EntryNode. The first node of the linked list in requested index location
-	 *   of hash table.
-	 */
-	public EntryNode get(Key key) {
-		return hashTable.get(key);
+		numEntries = lineCounter;
+		this.totalSize = totalSize;
 	}
 	
 	/**
-	 * Get a linked list of entries in hash table by attribute and value (refer to NCDB_Data_Dictionary.docx).
-	 * If requested attribute is not part of key information, will take linear time to search (must check all entries).
-	 * Admissible attributes are: C_YEAR, C_MNTH, C_WDAY, C_HOUR, C_SEV, C_VEHS, C_CONF, C_RCFG, C_WTHR, C_RSUR, C_RALN,
-	 * C_TRAF, V_ID, V_TYPE, V_YEAR, P_ID, P_SEX, P_AGE, P_PSN, P_ISEV, P_SAFE, P_USER, C_CASE
-	 */ // TODO
-//	public EntryNode getByAttr(String attr, int val) {
-//		if () {
-//			
-//		}
-//	}
+	 * Initialize the hash maps by creating one for each relevant attribute in the data set.
+	 */
+	private void initHashMaps() {
+		Map<Integer, ArrayList<Entry>> hashMap;
+		for (int i = 0; i < attributes.length; i++) {
+			hashMap = new HashMap<>();
+			attrHashMaps.put(attributes[i], hashMap);
+		}
+	}
+	
+	public int getNumEntries() {
+		return numEntries;
+	}
+	
+	public int getTotalSize() {
+		return totalSize;
+	}
+	
+	public ArrayList<Entry> get(String attr, int val) {
+		return get(attr).get(val);
+	}
+	
+	/**
+	 * Get all entries whose attributes have given values. For example, all entries (collisions)
+	 * that occurred in January (C_MNTH = 1) and during rainy weather (C_WTHR = 3).
+	 * 
+	 * @param attrs Array of names of attributes. For example: ["C_MNTH", "C_WTHR"]
+	 * @param vals Array of corresponding values of the attributes. For example: [1, 3]
+	 * @return An ArrayList of entries matching given attribute values.
+	 */
+	public ArrayList<Entry> get(String[] attrs, int[] vals) {
+		ArrayList<Entry>[] results = new ArrayList[attrs.length];
+		ArrayList<Entry> filtered = new ArrayList<>();
+		int smallest = 0;
+		
+		// Get results from individual attributes and put in an array.
+		// For example: [ArrayList of matching C_MNTH, ArrayList of matching C_WTHR]
+		for (int i = 0; i < attrs.length; i++) {
+			results[i] = get(attrs[i], vals[i]);
+			if (results[i].size() < results[smallest].size()) {
+				smallest = i;
+			}
+		}
+		
+		// Loop through smallest ArrayList and collate entries that match all given attribute values.
+		for (int i = 0; i < results[smallest].size(); i++) {
+			for (int j = 0; j < attrs.length; j++) {
+				if (results[smallest].get(i).getAttr(attrs[j]) == vals[j]) {
+					filtered.add(results[smallest].get(i));
+				}
+			}
+		}
+		return filtered;
+	}
+	
+	public Map<Integer, ArrayList<Entry>> get(String attr) {
+		return attrHashMaps.get(attr);
+	}
+	
+	public int count(String attr, int val) {
+		return get(attr, val).size();
+	}
+	
+	public int count(String[] attrs, int[] vals) {
+		return get(attrs, vals).size();
+	}
 }
