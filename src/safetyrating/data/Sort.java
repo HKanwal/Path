@@ -1,5 +1,5 @@
 /**
- * 
+ * Adding an initial sort method - not fully integrated
  */
 package safetyrating.data;
 
@@ -10,7 +10,7 @@ package safetyrating.data;
 public class Sort {
 	
 	
-	//Sort the 273 
+	//Sort page 273 
 	private static Comparable[] aux;
 	
 	public static void sort(Comparable[] a) {

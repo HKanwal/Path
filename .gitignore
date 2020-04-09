@@ -10,3 +10,4 @@ api/*.fdb_latexmk
 *.csv
 *.docx
 *.docx#
+/.metadata/
