@@ -1,6 +1,14 @@
 .classpath
 .project
 .settings
+
+#maven dependecies
+mvnw
+*.cmd
+.mvn
+
+
+#general dependencies
 bin/*
 api/*.aux
 api/*.log
