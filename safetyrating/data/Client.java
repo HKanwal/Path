@@ -13,7 +13,7 @@ public class Client {
 
 	public static void main(String[] args) {
 		try {
-			CollisionDatabase data = new CollisionDatabase();
+			CollisionDatabase data = new CollisionDatabase(); //Collision Database line 48
 		}
 		catch (IOException e) {
 			e.printStackTrace();

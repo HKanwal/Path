@@ -45,7 +45,8 @@ public class CollisionDatabase {
 		initHashMaps();
 		
 		// Reads all lines of data-set.
-		while ((line = data.readLine()) != null) {
+		while ((line = data.readLine()) != null && lineCounter <= 1000000 //should be removed
+				) {
 			// Skip first line (headers).
 			if (lineCounter == 0) {
 				lineCounter++;
@@ -66,7 +67,7 @@ public class CollisionDatabase {
 				currentMap = attrHashMaps.get(currentAttr);
 				currentMap.putIfAbsent(attrVal, new ArrayList<Entry>());
 				currentMap.get(attrVal).add(currentEntry);
-				System.out.println("Inserted key " + lineCounter + " into hash map for " + currentAttr);
+				//System.out.println("Inserted key " + lineCounter + " into hash map for " + currentAttr);
 				totalSize++;
 			}
 			
