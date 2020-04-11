@@ -1,7 +1,6 @@
 package safetyrating.data;
 
 import java.io.IOException;
-import safetyrating.data.CollisionDatabase;
 
 
 /**
@@ -12,12 +11,19 @@ import safetyrating.data.CollisionDatabase;
 public class Client {
 
 	public static void main(String[] args) {
+		CollisionDatabase data = null;
 		try {
-			CollisionDatabase data = new CollisionDatabase();
+			data = new CollisionDatabase();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Parsing complete.");
+		System.out.println("Number of entries: " + data.getNumEntries());
+		System.out.println("Total size of hash maps: " + data.getTotalSize());
+
+		QueryFactory factory = new QueryFactory(data);
+		factory.start();
 	}
 
 }
