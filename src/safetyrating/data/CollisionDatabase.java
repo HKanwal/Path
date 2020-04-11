@@ -17,7 +17,7 @@ import java.io.BufferedReader;
  */
 public class CollisionDatabase {
 	private Map<String, Map<Integer, ArrayList<Entry>>> attrHashMaps = new HashMap<>();
-	private String[] attributes = new String[] {"C_MNTH", "C_WDAY", "C_HOUR", "C_WTHR", "C_RSUR", "C_RCFG"};
+	private String[] attributes = new String[] {"C_MNTH", "C_WDAY", "C_HOUR", "C_WTHR", "C_RSUR", "V_TYPE"};
 	private int numEntries;
 	private int totalSize;
 	
@@ -70,6 +70,9 @@ public class CollisionDatabase {
 			
 			// Statistics.
 			lineCounter++;
+			if (lineCounter > 100000) {
+				break;
+			}
 		}
 		data.close();
 
