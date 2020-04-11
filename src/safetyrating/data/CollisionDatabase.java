@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import safetyrating.data.Entry;
-import safetyrating.data.Key;
 
 
 /**
@@ -20,7 +17,7 @@ import safetyrating.data.Key;
  */
 public class CollisionDatabase {
 	private Map<String, Map<Integer, ArrayList<Entry>>> attrHashMaps = new HashMap<>();
-	private String[] attributes = {"C_MNTH", "C_WDAY", "C_HOUR", "C_WTHR", "C_RSUR", "C_RCFG"};
+	private String[] attributes = new String[] {"C_MNTH", "C_WDAY", "C_HOUR", "C_WTHR", "C_RSUR", "C_RCFG"};
 	private int numEntries;
 	private int totalSize;
 	
@@ -74,10 +71,8 @@ public class CollisionDatabase {
 			// Statistics.
 			lineCounter++;
 		}
-		System.out.println("Parsing complete.");
-		System.out.println("Number of entries: " + lineCounter);
-		System.out.println("Total size of hash maps: " + totalSize);
 		data.close();
+
 		numEntries = lineCounter;
 		this.totalSize = totalSize;
 	}
@@ -100,9 +95,34 @@ public class CollisionDatabase {
 	public int getTotalSize() {
 		return totalSize;
 	}
+
+	public String[] getAttrs() {
+		// Preserve encapsulation.
+		return attributes.clone();
+	}
 	
+	/**
+	 * Get entries whose given attribute matches given value. Eg: C_MNTH is 5.
+	 * 
+	 * @param attr The String attribute.
+	 * @param val The value of the attribute as an int.
+	 * @return An ArrayList of entries that match the query.
+	 */
 	public ArrayList<Entry> get(String attr, int val) {
 		return get(attr).get(val);
+	}
+
+	/**
+	 * Get the hashmap corresponding to the given attribute.
+	 * They keys of the hashmap will be the possible values the attribute can take.
+	 * 
+	 * @param attr The attribute to query.
+	 * @return A hashmap corresponding to the given attr whose keys are the possible
+	 *   values the attribute can take and correspond to ArrayLists of the entries with that
+	 *   value for the given attribute.
+	 */
+	public Map<Integer, ArrayList<Entry>> get(String attr) {
+		return attrHashMaps.get(attr);
 	}
 	
 	/**
@@ -138,14 +158,24 @@ public class CollisionDatabase {
 		return filtered;
 	}
 	
-	public Map<Integer, ArrayList<Entry>> get(String attr) {
-		return attrHashMaps.get(attr);
-	}
-	
+	/**
+	 * Count the number of collisions with the given attribute being equal to the given value.
+	 * 
+	 * @param attr The attribute to query.
+	 * @param val The value the attribute must have.
+	 * @return An int. The count of the number of matching collisions in the dataset.
+	 */
 	public int count(String attr, int val) {
 		return get(attr, val).size();
 	}
 	
+	/**
+	 * Count the number of collision with the given attributes being equal to the given values.
+	 * 
+	 * @param attrs The attributes to query.
+	 * @param vals The values the attributes must have.
+	 * @return An int. The count of the number of matching collisions in the dataset.
+	 */
 	public int count(String[] attrs, int[] vals) {
 		return get(attrs, vals).size();
 	}
