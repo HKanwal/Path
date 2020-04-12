@@ -8,6 +8,5 @@ api/*.synctex.gz
 api/*.fls
 api/*.fdb_latexmk
 *.csv
-*.docx
 *.docx#
 /.metadata/
