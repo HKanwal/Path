@@ -193,6 +193,6 @@ public class CollisionDatabase {
 	 */
 	public double percentage(String[] attrs, int[] vals) {
 		ArrayList<Entry> results = get(attrs, vals);
-		return Double.valueOf(results.size())/Double.valueOf(numEntries);
+		return 100*Double.valueOf(results.size())/Double.valueOf(numEntries);
 	}
 }
