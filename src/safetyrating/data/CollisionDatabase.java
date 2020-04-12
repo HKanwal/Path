@@ -43,7 +43,7 @@ public class CollisionDatabase {
 		initHashMaps();
 		
 		// Reads all lines of data-set.
-		while ((line = data.readLine()) != null) {
+		while ((line = data.readLine()) != null && lineCounter <= 1000000) { //should be removed
 			// Skip first line (headers).
 			if (lineCounter == 0) {
 				lineCounter++;
