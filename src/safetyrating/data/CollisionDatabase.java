@@ -71,9 +71,6 @@ public class CollisionDatabase {
 			
 			// Statistics.
 			lineCounter++;
-			if (lineCounter > 100000) {
-				break;
-			}
 		}
 		data.close();
 
