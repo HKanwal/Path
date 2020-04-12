@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.io.FileReader;
 import java.io.BufferedReader;
 
@@ -181,5 +182,17 @@ public class CollisionDatabase {
 	 */
 	public int count(String[] attrs, int[] vals) {
 		return get(attrs, vals).size();
+	}
+
+	/**
+	 * Perform a query and get the percentage of the total collisions that the results of the query embody.
+	 * 
+	 * @param attrs The attributes of the query.
+	 * @param vals The corresponding values of the attributes.
+	 * @return The percentage of collisions that match the given query.
+	 */
+	public double percentage(String[] attrs, int[] vals) {
+		ArrayList<Entry> results = get(attrs, vals);
+		return Double.valueOf(results.size())/Double.valueOf(numEntries);
 	}
 }
