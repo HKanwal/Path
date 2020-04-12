@@ -2,13 +2,18 @@
 
 \usepackage[dvipsnames]{xcolor}
 \usepackage{changepage}
+\usepackage{longtable}
 
 \newcommand{\Tstrut}{\rule{0pt}{3.5ex}}
 \newcommand{\Bstrut}{\rule{0pt}{2.7ex}}
 \newcommand{\col}{RubineRed}
 
+\oddsidemargin 10mm
+\evensidemargin 0mm
+
 \begin{document}
 
+\begin{adjustwidth}{10mm}{}
 \begin{center}
 
   {\large \textbf{SFWRENG 2XB3}}\\[8mm]
@@ -20,48 +25,61 @@
   {\large \today}
 
 \end{center}
+\end{adjustwidth}
 
 \medskip
 
-\begin{adjustwidth}{-0.75in}{}
-
 \begin{center}
-\begin{tabular}{ r l l }
+\begin{longtable}{ r l l }
 
-  \multicolumn{2}{ l }{public class \color{\col} EntryNode} \\[2mm]
+  \multicolumn{2}{ l }{public class \color{\col} Entry} \\[2mm]
   \hline
-  & EntryNode(String entryLine) & \color{\col} create an entry (linked list node) from line of data \Tstrut \\
-  EntryNode & clone() & \color{\col} clone current EntryNode\Bstrut \\
-  & linkNext(EntryNode node) & \color{\col} change next node pointer\Bstrut \\
-  & append(EntryNode node) & \color{\col} append node to end of this linked list\Bstrut \\
-  EntryNode & getNext() & \color{\col} get next node\Bstrut \\
-  int & getAttr(String attr) & \color{\col} get value of field\Bstrut \\
-  String & toString() & \color{\col} String representation of entry\Bstrut \\
-  int & append(EntryNode node) & \color{\col} append node to end of this linked list\Bstrut \\[8mm]
+  & Entry(String csvLine) & \color{\col} create entry from line of data (represents a collision) \Tstrut \\
+  String & toString() & \color{\col} get csv data line\Bstrut \\
+  int & getAttr(String attr) & \color{\col} get value of an attribute by name (eg. C\_WTHR)\Bstrut \\
+  int & C\_YEAR() & \color{\col} get value of C\_YEAR\Bstrut \\
+  int & C\_MNTH() & \color{\col} get value of C\_MNTH\Bstrut \\
+  int & C\_WDAY() & \color{\col} get value of C\_WDAY\Bstrut \\
+  int & C\_HOUR() & \color{\col} get value of C\_HOUR\Bstrut \\
+  int & C\_SEV() & \color{\col} get value of C\_SEV\Bstrut \\
+  int & C\_VEHS() & \color{\col} get value of C\_VEHS\Bstrut \\
+  int & C\_CONF() & \color{\col} get value of C\_CONF\Bstrut \\
+  int & C\_RCFG() & \color{\col} get value of C\_RCFG\Bstrut \\
+  int & C\_WTHR() & \color{\col} get value of C\_WTHR\Bstrut \\
+  int & C\_RSUR() & \color{\col} get value of C\_RSUR\Bstrut \\
+  int & C\_RALN() & \color{\col} get value of C\_RALN\Bstrut \\
+  int & C\_TRAF() & \color{\col} get value of C\_TRAF\Bstrut \\
+  int & V\_ID() & \color{\col} get value of V\_ID\Bstrut \\
+  int & V\_TYPE() & \color{\col} get value of V\_TYPE\Bstrut \\
+  int & V\_YEAR() & \color{\col} get value of V\_YEAR\Bstrut \\
+  int & P\_ID() & \color{\col} get value of P\_ID\Bstrut \\
+  int & P\_SEX() & \color{\col} get value of P\_SEX\Bstrut \\
+  int & P\_AGE() & \color{\col} get value of P\_AGE\Bstrut \\
+  int & P\_PSN() & \color{\col} get value of P\_PSN\Bstrut \\
+  int & P\_ISEV() & \color{\col} get value of P\_ISEV\Bstrut \\
+  int & P\_SAFE() & \color{\col} get value of P\_SAFE\Bstrut \\
+  int & P\_USER() & \color{\col} get value of P\_USER\Bstrut \\
+  int & C\_CASE() & \color{\col} get value of C\_CASE\Bstrut \\
 
-\end{tabular}
+\end{longtable}
 \end{center}
 
-\bigskip
-
 \begin{center}
-\begin{tabular}{ r l l }
+\begin{longtable}{ r l l }
 
-  \multicolumn{2}{ l }{public class \color{\col} Key} \\[2mm]
+  \multicolumn{2}{ l }{public class \color{\col} CollisionDatabase} \\[2mm]
   \hline
-  & Key(int yr, int hr, int wthr) & \color{\col} create a key\Tstrut \\
-  String & toString() & \color{\col} String representation of key\Bstrut \\
-  int & compareByYearTo(Key key) & \color{\col} compare to key by year\Bstrut \\
-  int & compareByHourTo(Key key) & \color{\col} compare to key by hour\Bstrut \\
-  int & compareByWeatherTo(Key key) & \color{\col} compare to key by weather\Bstrut \\
-  boolean & isEqual(Key key) & \color{\col} check for equality with key\Bstrut \\
-  int & V\_YEAR() & \color{\col} get vehicle model year\Bstrut \\
-  int & C\_HOUR() & \color{\col} get collision hour\Bstrut \\
-  int & C\_WTHR() & \color{\col} get collision weather\Bstrut \\
+  & CollisionDatabase() & \color{\col} instantiate database and parse data\Tstrut \\
+  int & getNumEntries() & \color{\col} get total number of entries\Bstrut \\
+  int & getTotalSize() & \color{\col} get total combined size of hashmaps\Bstrut \\
+  String[] & getAttrs() & \color{\col} get attributes hashmaps are indexed by\Bstrut \\
+  ArrayList$<$Entry$>$ & get(String attr, int val) & \color{\col} query for entries whose attr matches val\Bstrut \\
+  ArrayList$<$Entry$>$ & get(String[] attrs, int[] vals) & \color{\col} query for entries whose attrs matche vals\Bstrut \\
+  int & count(String attr, int val) & \color{\col} count number of entries that match query\Bstrut \\
+  int & count(String[] attr, int[] vals) & \color{\col} count number of entries that match query\Bstrut \\
+  double & count(String[] attr, int[] vals) & \color{\col} get number found entries as percentage\Bstrut \\
 
-\end{tabular}
+\end{longtable}
 \end{center}
-
-\end{adjustwidth}
 
 \end{document}
