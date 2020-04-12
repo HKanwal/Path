@@ -1,14 +1,14 @@
-/**
- * 
- */
 package safetyrating.data;
 
 import java.util.ArrayList;
 
 /**
- * @author Pesara
- *
+ * @author Pesara Amarasekera
+ * Revised April 12th 2020
+ * 
+ * Rate function to provide a rating depending on the start location and end location
  */
+
 public class Rating {
 
 	//the start_weather and end_weather are found in the main object of the OWM JSON output
