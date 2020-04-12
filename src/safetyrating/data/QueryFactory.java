@@ -155,7 +155,7 @@ public class QueryFactory {
                 System.out.print("Month (C_MNTH) = " + entry.C_MNTH() + ", ");
                 System.out.print("Day (C_WDAY) = " + entry.C_WDAY() + ", ");
                 System.out.print("Hour (C_HOUR) = " + entry.C_HOUR() + ", ");
-                System.out.print("Weather (C_WHTR) = " + entry.C_WTHR() + ", ");
+                System.out.print("Weather (C_WTHR) = " + entry.C_WTHR() + ", ");
                 System.out.print("Roadway configuration (C_RCFG) = " + entry.C_RCFG() + ", ");
                 System.out.print("Road surface (C_RSUR) = " + entry.C_RSUR() + ", ");
                 System.out.print("Vehicle type (V_TYPE) = " + entry.V_TYPE() + ", ");
@@ -167,4 +167,5 @@ public class QueryFactory {
         }
         System.out.print("\n");
     }
+    
 }
