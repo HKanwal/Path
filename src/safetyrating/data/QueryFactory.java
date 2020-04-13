@@ -104,7 +104,14 @@ public class QueryFactory {
                 else {
                     System.out.print("Print in human readable format? (y/n) ");
                     String humanReadable = scanner.nextLine();
-                    printQuery(selectdAttrs, vals, !(humanReadable.equals("n") || humanReadable.equals("N")));
+                    System.out.print("Sort results by: " + attrsAsOptions() + " ");
+                    String sortBy = scanner.nextLine();
+                    if (!validAttr(sortBy)) {
+                        System.out.println("Invalid attribute.");
+                    }
+                    else {
+                        printQuery(selectdAttrs, vals, !(humanReadable.equals("n") || humanReadable.equals("N")), sortBy);
+                    }
                 }
             }
             else {
@@ -127,7 +134,7 @@ public class QueryFactory {
         }
     }
 
-    private void printQuery(String[] selectdAttrs, String[] vals, boolean humanReadable) {
+    private void printQuery(String[] selectdAttrs, String[] vals, boolean humanReadable, String sortBy) {
         // Converts vals from String[] to int[].
         int[] valsAsInts = new int[vals.length];
         try {
@@ -149,6 +156,7 @@ public class QueryFactory {
             System.out.println("One or more of the requested values was out of range.");
             return;
         }
+        Sort.sort(results, sortBy);
         for (int i = 0; i < results.size(); i++) {
             Entry entry = results.get(i);
             if (humanReadable) {
