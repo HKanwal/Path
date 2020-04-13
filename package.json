@@ -7,7 +7,10 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "fs": "0.0.1-security",
+    "fs-js": "^1.0.6",
     "google-maps-react": "^2.0.2",
+    "java.io": "^2.4.0",
     "react": "^16.13.1",
     "react-charts": "^2.0.0-beta.6",
     "react-dom": "^16.13.1",
@@ -35,5 +38,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
