@@ -1,5 +1,6 @@
 
 Run Instructions: To run the front and back end simultaneously, need two different console instances open.
+(We weren't able to get the front and backend to work together, but they were both able to work fully on their own. You will find descriptions of how this affected the final product below.)
 
 For Front-end:
 - Stay in root directory (Path)
