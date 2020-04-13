@@ -10,15 +10,6 @@ import java.util.ArrayList;
  * Revised April 12, 2020
  */
 
-/**
- * Alright pesera, here's what we need. Can you implement 
- * quicksort with the assumption that you are given an 
- * ArrayList of Entries where the entries are instances 
- * of the Entry class in the repo? You must additionally 
- * sort based on the attribute that is given eg. C_WTHR.
- * @author Pesara
- *
- */
 public class Sort {
 	
 	
@@ -27,6 +18,7 @@ public class Sort {
 	private static ArrayList<Entry> aux;
 	private static String attribute;
 	
+	//default sort
 	public static void sort(ArrayList<Entry> a, String s) {
 		QuickSort(a,s);
 	}
@@ -70,6 +62,7 @@ public class Sort {
 		quicksort(a,gt + 1,hi);
 	}
 	
+	//compare helper method
 	private static int compare(Entry a, Entry b) {
 		int acomp = 0;
 		int bcomp = 0;
@@ -99,6 +92,7 @@ public class Sort {
 		mergesort(a,0,a.size()-1);
 	}
 	
+	//mergesort
 	private static void mergesort(ArrayList<Entry> a, int lo, int hi) {
 		if(hi <= lo) return;
 		int mid = lo + (hi-lo)/2;
@@ -107,7 +101,7 @@ public class Sort {
 		merge(a,lo,mid,hi);
 	}
 	
-	//Abstract in-place merge page 271
+	//Abstract in-place merge
 	private static void merge(ArrayList<Entry> a, int lo, int mid, int hi) {
 		int i = lo,j = mid+1;
 		
@@ -124,6 +118,7 @@ public class Sort {
 		}
 	}
 
+	//Makes sure that an arrayList is sorted
 	public static boolean isSorted(ArrayList<Entry> a, String s) {
 		attribute = s;
 		for (int i = 1; i<a.size();i++) {
@@ -132,13 +127,21 @@ public class Sort {
 		return true;
 	}
 	
+	/**
+	 * Exchanges entries in an ArrayList
+	 */
 	private static void exchange(ArrayList<Entry> a,int c, int b) {
 		Entry t = a.get(c);
 		a.set(c,  a.get(b));
 		a.set(b, t);
 	}
 	
-	
+	/**
+	 * 
+	 * @param a entry to compare
+	 * @param b entry to compare
+	 * @return true if a is less than b otherwise false
+	 */
 	private static boolean less(Entry a, Entry b) {
 		int s = compare(a,b);
 		if(s<0) {
