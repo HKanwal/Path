@@ -5,6 +5,8 @@ import MapContext from './mapContext';
 
 const MapState = props => {
 
+    axios.defaults.baseURL = 'http://localhost:8080';
+
     // Get the hazard rating
     const getHazard = async (start, end, carModel) => {
         const config = {
@@ -26,19 +28,10 @@ const MapState = props => {
         }
     };
 
-    const getVType = async () => {
-        try {
-            return await axios.get('/');
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     return (
         <MapContext.Provider 
             value={{
-                getHazard,
-                getVType
+                getHazard
             }}
         >
             {props.children}

@@ -15,7 +15,7 @@ const Main = ({ hazardRating, google, coords }) => {
 
     const mapContext = useContext(MapContext);
 
-    const { getHazard, getVType } = mapContext;
+    const { getHazard } = mapContext;
 
     const series = React.useMemo(
         () => ({
@@ -68,7 +68,7 @@ const Main = ({ hazardRating, google, coords }) => {
         carModel: ''
     })
 
-    const { carModel } = car;
+    let { carModel } = car;
 
     const onChangeCar = e => 
         setCar({ ...car, [e.target.name]: e.target.value });
