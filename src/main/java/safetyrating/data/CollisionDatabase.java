@@ -136,7 +136,7 @@ public class CollisionDatabase {
 	 */
 	public ArrayList<Entry> get(String[] attrs, int[] vals) {
 		ArrayList<Entry>[] results = new ArrayList[attrs.length];
-		ArrayList<Entry> filtered = new ArrayList<>();
+		ArrayList<Entry> filtered = new ArrayList<Entry>();
 		int smallest = 0;
 		
 		// Get results from individual attributes and put in an array.
@@ -149,11 +149,17 @@ public class CollisionDatabase {
 		}
 		
 		// Loop through smallest ArrayList and collate entries that match all given attribute values.
+		boolean flag; // true if entry matches all given attribute values.
 		for (int i = 0; i < results[smallest].size(); i++) {
+			flag = true; // set to false when val mismatch found.
 			for (int j = 0; j < attrs.length; j++) {
-				if (results[smallest].get(i).getAttr(attrs[j]) == vals[j]) {
-					filtered.add(results[smallest].get(i));
+				if (!(results[smallest].get(i).getAttr(attrs[j]) == vals[j])) {
+					flag = false;
 				}
+			}
+			// no mismatch found so add to final query results.
+			if (flag) {
+				filtered.add(results[smallest].get(i));
 			}
 		}
 		return filtered;
